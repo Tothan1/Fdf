@@ -58,6 +58,8 @@ SRC_FILES = ft_atoi.c \
 		ft_super_strjoin.c \
 		ft_strjoin3.c\
 		ft_free_tab.c \
+		get_next_line.c \
+		get_next_line_utils.c \
 		ft_printf.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)

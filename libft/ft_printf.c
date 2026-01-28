@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 10:53:38 by tle-rhun          #+#    #+#             */
-/*   Updated: 2025/11/29 15:33:54 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:18:12 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
-#include <stdio.h>
+/* #include <stdio.h>
 int main (void)
 {
 	const char * str ="oui";
@@ -146,4 +146,4 @@ int main (void)
 	ft_printf(0);
 	// return (1);
 // 
-}
+} */

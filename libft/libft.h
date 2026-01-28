@@ -6,12 +6,15 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:00:12 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/26 10:20:07 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:18:42 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 9
+# endif 
 
 # include <stddef.h>
 # include <string.h>
@@ -20,6 +23,9 @@
 # include <ctype.h>
 # include <stdint.h>
 # include <stdarg.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 /* character / classification */
 int		ft_isalpha(int character);
@@ -93,5 +99,10 @@ int		ft_putadressmemory(void *pointeur);
 int		ft_putbase(unsigned long nbr, char *base);
 int		ft_unsignedputnbr_fd(int n);
 int		ft_putnbr(int n);
+
+/* get next line*/
+char	*get_next_line(int fd);
+char	*ft_strjoin_limits(char *s1, char *s2, int limits);
+char	*ft_secondtab_limits(int i, char *newstr, char *s2, int limits);
 
 #endif /* LIBFT_H */
