@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/27 17:27:47 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:50:28 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include <sys/types.h>
 #include <math.h>
 
-
+typedef struct filedescriptor
+{
+	void *mlx_ptr;
+	void *win_ptr;
+}		t_datSa;
 
 #endif
