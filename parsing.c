@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/29 10:56:35 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:16:23 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ int	fill_struct_point(int j, int line, t_point **point, int fd)
 		point[j][i].column = collumn;
 		point[j][i].line = line;
 		point[j][i].last_of_the_line = 1;
-		printf("tab[%d][%d] x:%d y:%d z:%d column: %d line: %d\n", j, i, point[j][i].x, point[j][i].y, point[j][i].z, point[j][i].column, point[j][i].line);
+		// printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d\n", j, i, point[j][i].y, point[j][i].x, point[j][i].z, point[j][i].column, point[j][i].line);
 		i++;
 	}
 	ft_free_tab(split);
 	printf ("\n\n");
-	point[j][i].last_of_the_line = 0;
-	return(j++);
+	// point[j][i].last_of_the_line = 0;
+	j++;
+	return(j);
 }
 t_point	**recover_map(char **av)
 {
@@ -59,7 +60,8 @@ t_point	**recover_map(char **av)
 	while (i < line)
 		i = fill_struct_point(i, line, point, fd);
 	point[i] = NULL;
-	
+	printf("tab[2][0] x:%d y:%d\n", point[2][0].x, point[2][0].y);
+
 	return (point);
 }
 
