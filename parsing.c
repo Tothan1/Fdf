@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/29 11:34:46 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:09:11 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	fill_struct_point(int j, int line, t_point **point, int fd)
 		point[j][i].column = collumn;
 		point[j][i].line = line;
 		point[j][i].last_of_the_line = 1;
-		// printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d\n", j, i, point[j][i].y, point[j][i].x, point[j][i].z, point[j][i].column, point[j][i].line);
+		printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d\n", j, i, point[j][i].y, point[j][i].x, point[j][i].z, point[j][i].column, point[j][i].line);
 		i++;
 	}
 	ft_free_tab(split);
@@ -70,6 +70,7 @@ int	close_window(void *valu)
 	t_data	*value;
 
 	value = (t_data *)valu;
+	mlx_destroy_image(value->mlx_ptr, value->img_ptr);
 	mlx_destroy_window((value->mlx_ptr), value->win_ptr);
 	mlx_loop_end(value->mlx_ptr);
 	return (1);
@@ -86,26 +87,14 @@ int	main(int ac, char **av)
 {
 	t_data value;
 	t_point **point;
-	int i;
-	int j;
-
-	j = 0;
 	if (ac == 2)
 	{
 		point = recover_map(av);
+		// printf("boucle while:%d", (point[j][0].column -1 ));
 		value.mlx_ptr = mlx_init();
 		value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
-		// mlx_new_image(value.mlx_ptr, 1920, 1080);
-		while(j <( point[0][0].column * point[0][0].line))
-		{
-			i = 0;
-			while (i < point[j][0].column)
-			{
-				mlx_pixel_put(value.mlx_ptr, value.win_ptr, point[j][i].x, point[j][i].y, 0xFFFFFFFF);
-				i++;
-			}
-			j++;
-		}
+		value.img_ptr = mlx_new_image(value.mlx_ptr, 1920, 1080);
+		draw(value, point);
 		mlx_key_hook(value.win_ptr, redirection_event, &value);
 		mlx_hook(value.win_ptr, 17, 0, close_window, &value);
 		mlx_loop(value.mlx_ptr);

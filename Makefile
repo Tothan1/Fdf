@@ -9,7 +9,8 @@ CFLAGS=-Wall -Wextra -Werror
 # OBJ=ft_*.c =.o
 # SRCS = $(HEADER_PATH)ft_atoi
 #### SOURCE ####
-SRC_FILES = parsing.c
+SRC_FILES = parsing.c \
+		draw.c \
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 # OBJ_FILES = $(addsuffix .o, $(SRC_FILES))
@@ -32,12 +33,10 @@ ${MLX} :
 clean:
 	rm -f ${OBJ_FILES}
 	$(MAKE) -C ./libft clean
-	$(MAKE) -C ./mlx clean
 
 fclean: clean
 	rm -f ${NAME}
 	$(MAKE) -C ./libft fclean
-	$(MAKE) -C ./mlx fclean
 
 re: fclean  all
 
