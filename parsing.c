@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/29 11:16:23 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:34:46 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_point	**recover_map(char **av)
 	while (i < line)
 		i = fill_struct_point(i, line, point, fd);
 	point[i] = NULL;
-	printf("tab[2][0] x:%d y:%d\n", point[2][0].x, point[2][0].y);
+	// printf("tab[2][0] x:%d y:%d\n", point[2][0].x, point[2][0].y);
 
 	return (point);
 }
@@ -84,17 +84,31 @@ int	redirection_event(int key, void *valu)
 
 int	main(int ac, char **av)
 {
-	// t_data value;
+	t_data value;
 	t_point **point;
+	int i;
+	int j;
+
+	j = 0;
 	if (ac == 2)
 	{
 		point = recover_map(av);
-		// value.mlx_ptr = mlx_init();
-		// value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
-		// mlx_pixel_put(value.mlx_ptr, value.win_ptr, 20, 30, 0xFFFF00FF);
-		// mlx_key_hook(value.win_ptr, redirection_event, &value);
-		// mlx_hook(value.win_ptr, 17, 0, close_window, &value);
-		// mlx_loop(value.mlx_ptr);
-		// mlx_loop_end(value.mlx_ptr);
+		value.mlx_ptr = mlx_init();
+		value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
+		// mlx_new_image(value.mlx_ptr, 1920, 1080);
+		while(j <( point[0][0].column * point[0][0].line))
+		{
+			i = 0;
+			while (i < point[j][0].column)
+			{
+				mlx_pixel_put(value.mlx_ptr, value.win_ptr, point[j][i].x, point[j][i].y, 0xFFFFFFFF);
+				i++;
+			}
+			j++;
+		}
+		mlx_key_hook(value.win_ptr, redirection_event, &value);
+		mlx_hook(value.win_ptr, 17, 0, close_window, &value);
+		mlx_loop(value.mlx_ptr);
+		mlx_loop_end(value.mlx_ptr);
 	}
 }
