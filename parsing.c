@@ -6,72 +6,93 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/28 18:25:47 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/29 10:56:35 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-fill_struct_point(int i, t_point **point)
+int	fill_struct_point(int j, int line, t_point **point, int fd)
 {
-		point[i] = malloc(sizeof(t_point *) * (line + 1));
-
-}
-void	**recover_map(char **av)
-{
-	t_point **point;
-	int collumn;
-	int line;
-	int fd;
-	int i;
-	char **split;
+	char	**split;
+	int		collumn;
+	int		i;
 
 	i = 0;
-	collumn = 1;
+	collumn = 0;
+	split = ft_split(get_next_line(fd), ' ');
+	while (split[collumn] != NULL)
+		collumn++;
+	point[j] = malloc(sizeof(t_point) * collumn);
+	while (i < collumn)
+	{
+		point[j][i].x = i;
+		point[j][i].y = j;
+		point[j][i].z = ft_atoi (split[i]);
+		point[j][i].column = collumn;
+		point[j][i].line = line;
+		point[j][i].last_of_the_line = 1;
+		printf("tab[%d][%d] x:%d y:%d z:%d column: %d line: %d\n", j, i, point[j][i].x, point[j][i].y, point[j][i].z, point[j][i].column, point[j][i].line);
+		i++;
+	}
+	ft_free_tab(split);
+	printf ("\n\n");
+	point[j][i].last_of_the_line = 0;
+	return(j++);
+}
+t_point	**recover_map(char **av)
+{
+	t_point	**point;
+	int		line;
+	int		fd;
+	int		i;
+
 	line = 0;
 	fd = open(av[1], O_RDONLY);
-	split = ft_split (get_next_line(fd), ' ');
-	while( split[line]!= NULL)
+	while ((get_next_line(fd)) != NULL)
 		line++;
+	close(fd);
+	fd = open(av[1], O_RDONLY);
 	point = malloc(sizeof(t_point *) * (line + 1));
+	i = 0;
 	while (i < line)
-		fill_struct_point(i, point);
-	// while (get_neinet_line(fd) != NULL)
-	// 	collumn++;
-	printf("collumn:%d\n", collumn);
-	printf("line:%d\n", line);
+		i = fill_struct_point(i, line, point, fd);
+	point[i] = NULL;
+	
+	return (point);
 }
 
-int close_window(void * valu)
+int	close_window(void *valu)
 {
-	t_data *value;
+	t_data	*value;
 
-	value = (t_data*)valu;
+	value = (t_data *)valu;
 	mlx_destroy_window((value->mlx_ptr), value->win_ptr);
 	mlx_loop_end(value->mlx_ptr);
 	return (1);
 }
 
-int redirection_event(int key, void * valu)
+int	redirection_event(int key, void *valu)
 {
-	if(key == 65307)
+	if (key == 65307)
 		close_window(valu);
 	return (1);
 }
 
-int main (int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_data value;
+	// t_data value;
 	t_point **point;
-	if(ac == 2)
+	if (ac == 2)
 	{
 		point = recover_map(av);
-		value.mlx_ptr = mlx_init();
-		value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
-		mlx_pixel_put  ( value.mlx_ptr, value.win_ptr, 20, 30, 0xFFFF00FF);
-		mlx_key_hook(value.win_ptr, redirection_event, &value);
-		mlx_hook(value.win_ptr, 17, 0, close_window, &value);
-		mlx_loop(value.mlx_ptr);
+		// value.mlx_ptr = mlx_init();
+		// value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
+		// mlx_pixel_put(value.mlx_ptr, value.win_ptr, 20, 30, 0xFFFF00FF);
+		// mlx_key_hook(value.win_ptr, redirection_event, &value);
+		// mlx_hook(value.win_ptr, 17, 0, close_window, &value);
+		// mlx_loop(value.mlx_ptr);
+		// mlx_loop_end(value.mlx_ptr);
 	}
 }
