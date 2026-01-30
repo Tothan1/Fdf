@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/29 18:06:04 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/30 18:31:01 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ typedef struct mlx
 	int bits_per_pixel;
 	int size_line;
 	int endian;
-	void *mlx_ptr;
-	void *win_ptr;
+	int * buffer_img;
 	void *img_ptr;
+	void *win_ptr;
+	void *mlx_ptr;
 }		t_data;
 
 typedef struct point
@@ -37,5 +38,9 @@ typedef struct point
 	int column;
 	int last_of_the_line;
 }		t_point;
+
+	/* DRAW */ 
+int	get_index(int x, int y, int size_line);
+void	draw_segment(t_point point1, t_point point2, t_data value);
 void	draw(t_data value, t_point **point);
 #endif

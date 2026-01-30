@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/29 18:09:11 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/30 18:42:04 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ int	close_window(void *valu)
 	mlx_destroy_image(value->mlx_ptr, value->img_ptr);
 	mlx_destroy_window((value->mlx_ptr), value->win_ptr);
 	mlx_loop_end(value->mlx_ptr);
+	// free(value->img_ptr);
+	// free(value->win_ptr);
+	// free(value->mlx_ptr);
 	return (1);
 }
 
@@ -87,6 +90,7 @@ int	main(int ac, char **av)
 {
 	t_data value;
 	t_point **point;
+	// t_point **isométrique;
 	if (ac == 2)
 	{
 		point = recover_map(av);
