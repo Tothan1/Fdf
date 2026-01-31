@@ -6,12 +6,11 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/30 18:43:15 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:15:21 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	draw_segment(t_point point1, t_point point2, t_data value)
 {
@@ -19,6 +18,7 @@ void	draw_segment(t_point point1, t_point point2, t_data value)
 	float dx, dy, x, y;
 	dx = point2.x - point1.x;
 	dy = point2.y - point1.y;
+
 	if (dx >= dy)
 		step = dx;
 	else
@@ -30,8 +30,7 @@ void	draw_segment(t_point point1, t_point point2, t_data value)
 	i = 1;
 	while (i <= step)
 	{
-		printf("step:%d", step);
-		value.buffer_img[get_index(x * 40, y * 32, value.size_line)] = 0xFFFF25FF;
+		value.buffer_img[get_index(x, y, value.size_line)] = 0xFFFF25FF;
 		x = x + dx;
 		y = y + dy;
 		i++;
@@ -44,27 +43,28 @@ int	get_index(int x, int y, int size_line)
 }
 void	draw(t_data value, t_point **point)
 {
-	int j;
-	int i;
+	int y;
+	int x;
 
-	j = 0;
+	y = 0;
 
-	value.buffer_img = (int *)mlx_get_data_addr(value.img_ptr,
+	value.buffer_img = (int *)mlx_get_data_addr(value.img,
 			&value.bits_per_pixel, &value.size_line, &value.endian);
 	value.size_line /= 4;
-	while (j < (point[0][0].line))
+	while (y < (point[0][0].line))
 	{
-		i = 0;
-		while (i < (point[0][0].column - 1))
+		x = 0;
+		while (x < (point[0][0].column))
 		{
-			value.buffer_img[get_index(i * 40 + point[j][i].x, j * 32
-				+ point[j][i].y, value.size_line)] = 0xFFFFFFFF;
-			if (i > 0 && j == 0)
-				draw_segment(point[j][i - 1], point[j][i], value);
-			i++;
+			value.buffer_img[get_index(point[y][x].x,
+				point[y][x].y, value.size_line)] = 0xFFFFFFFF;
+			if (x > 0)
+				draw_segment(point[y][x - 1], point[y][x], value);
+			if (y > 0)
+				draw_segment(point[y - 1][x], point[y][x], value);
+			x++;
 		}
-		j++;
+		y++;
 	}
-	mlx_put_image_to_window(value.mlx_ptr, value.win_ptr, value.img_ptr, 700,
-		500);
+	mlx_put_image_to_window(value.mlx, value.win, value.img, 200, 50);
 }

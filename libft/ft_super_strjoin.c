@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 10:18:43 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/25 12:13:47 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/31 12:06:12 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,10 @@ int	ft_malloc(char *sep, int size, char **strs, int b)
 
 char	*ft_super_strjoin(int size, char **strs, char *sep)
 {
-	int		a;
 	int		b;
 	char	*concat;
 
 	b = 0;
-	a = 0;
 	if (size <= 0)
 	{
 		concat = (char *)malloc(1);

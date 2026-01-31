@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/30 18:31:01 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:13:53 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ typedef struct mlx
 	int size_line;
 	int endian;
 	int * buffer_img;
-	void *img_ptr;
-	void *win_ptr;
-	void *mlx_ptr;
+	void *img;
+	void *win;
+	void *mlx;
 }		t_data;
 
 typedef struct point

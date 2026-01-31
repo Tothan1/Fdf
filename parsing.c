@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/30 18:42:04 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:14:09 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	fill_struct_point(int j, int line, t_point **point, int fd)
 	point[j] = malloc(sizeof(t_point) * collumn);
 	while (i < collumn)
 	{
-		point[j][i].x = i;
-		point[j][i].y = j;
+		point[j][i].x = i * 40;
+		point[j][i].y = j * 40;
 		point[j][i].z = ft_atoi (split[i]);
 		point[j][i].column = collumn;
 		point[j][i].line = line;
@@ -70,12 +70,12 @@ int	close_window(void *valu)
 	t_data	*value;
 
 	value = (t_data *)valu;
-	mlx_destroy_image(value->mlx_ptr, value->img_ptr);
-	mlx_destroy_window((value->mlx_ptr), value->win_ptr);
-	mlx_loop_end(value->mlx_ptr);
-	// free(value->img_ptr);
-	// free(value->win_ptr);
-	// free(value->mlx_ptr);
+	mlx_destroy_image(value->mlx, value->img);
+	mlx_destroy_window((value->mlx), value->win);
+	mlx_loop_end(value->mlx);
+	// free(value->img);
+	// free(value->win);
+	// free(value->mlx);
 	return (1);
 }
 
@@ -95,13 +95,13 @@ int	main(int ac, char **av)
 	{
 		point = recover_map(av);
 		// printf("boucle while:%d", (point[j][0].column -1 ));
-		value.mlx_ptr = mlx_init();
-		value.win_ptr = mlx_new_window(value.mlx_ptr, 1920, 1080, "FDF 42");
-		value.img_ptr = mlx_new_image(value.mlx_ptr, 1920, 1080);
+		value.mlx = mlx_init();
+		value.win = mlx_new_window(value.mlx, 1280, 720, "FDF 42");
+		value.img = mlx_new_image(value.mlx, 1280, 720);
 		draw(value, point);
-		mlx_key_hook(value.win_ptr, redirection_event, &value);
-		mlx_hook(value.win_ptr, 17, 0, close_window, &value);
-		mlx_loop(value.mlx_ptr);
-		mlx_loop_end(value.mlx_ptr);
+		mlx_key_hook(value.win, redirection_event, &value);
+		mlx_hook(value.win, 17, 0, close_window, &value);
+		mlx_loop(value.mlx);
+		mlx_loop_end(value.mlx);
 	}
 }

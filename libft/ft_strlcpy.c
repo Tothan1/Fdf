@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:51:45 by tle-rhun          #+#    #+#             */
-/*   Updated: 2025/11/18 11:08:52 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/01/31 12:04:54 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	unsigned int			i;
 	unsigned int			len;
-	size_t					src_len;
 
 	len = (unsigned int) size;
 	i = 0;
@@ -30,7 +29,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	i = 0;
 	while (src[i])
 		i++;
-	src_len = (size_t)i;
 	return (i);
 }
 
