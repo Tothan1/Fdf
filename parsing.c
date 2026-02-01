@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/01 15:32:52 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/01 15:50:15 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	fill_struct_point(int j, int line, t_point **point, int fd)
 	point[j] = malloc(sizeof(t_point) * collumn);
 	while (i < collumn)
 	{
-		point[j][i].x = i * 20;
-		point[j][i].y = j * 20;
+		point[j][i].x = i * 30;
+		point[j][i].y = j * 30;
 		point[j][i].z = ft_atoi (split[i]);
 		point[j][i].column = collumn;
 		point[j][i].line = line;
@@ -89,7 +89,8 @@ t_point ** transform_on_3d(t_point ** point)
 {
 	int j = 0;
 	int i;
-	int a = 120;
+	// int a = 120;
+	int tmp;
 	t_point ** isométrique;
 	isométrique = point;
 	while(j < point[0][0].line)
@@ -97,9 +98,12 @@ t_point ** transform_on_3d(t_point ** point)
 		i = 0;
 		while(i < point[0][0].column)
 		{
-			isométrique[j][i].x = point[j][i].x + cos(a) * (point[j][i].z * -1) ;
-			isométrique[j][i].y = point[j][i].y + sin(a) * (point[j][i].z * -1);
-		printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d index_point:%d\n", j, i, isométrique[j][i].y, isométrique[j][i].x, isométrique[j][i].z, isométrique[j][i].column, isométrique[j][i].line, isométrique[j][i].index_point);
+			// isométrique[j][i].x = point[j][i].x + cos(a) * (point[j][i].z * -1) ;
+			// isométrique[j][i].y = point[j][i].y + sin(a) * (point[j][i].z * -1);
+			tmp = isométrique[j][i].x;
+			isométrique[j][i].x = (tmp - isométrique[j][i].y) * cos(0.523599);
+			isométrique[j][i].y = (tmp + isométrique[j][i].y) * sin(0.523599) - isométrique[j][i].z;
+			printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d index_point:%d\n", j, i, isométrique[j][i].y, isométrique[j][i].x, isométrique[j][i].z, isométrique[j][i].column, isométrique[j][i].line, isométrique[j][i].index_point);
 			i++;
 		}
 	printf ("\n\n");
