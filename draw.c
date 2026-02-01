@@ -6,12 +6,16 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/31 13:22:02 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/01 15:18:19 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+int	get_index(int x, int y, int size_line)
+{
+	return (y * size_line + x);
+}
 void	draw_segment(t_point point1, t_point point2, t_data value)
 {
 	int i, step;
@@ -37,10 +41,6 @@ void	draw_segment(t_point point1, t_point point2, t_data value)
 	}
 }
 
-int	get_index(int x, int y, int size_line)
-{
-	return (y * size_line + x);
-}
 void	draw(t_data value, t_point **point)
 {
 	int y;

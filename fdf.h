@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/31 13:13:53 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/01 14:34:52 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct point
 	int z;
 	int line;
 	int column;
-	int last_of_the_line;
+	int index_point;
 }		t_point;
 
 	/* DRAW */ 
