@@ -6,16 +6,18 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 13:12:08 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/01/28 17:23:41 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/02 15:34:55 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_tab(char **tab)
+void	ft_free_all(void **ptr)
 {
 	int	i;
-
+	char **tab;
+	
+	tab = (char **) ptr;
 	i = 0;
 	while (tab[i] != NULL)
 	{
