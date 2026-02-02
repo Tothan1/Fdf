@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/01 14:34:52 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/02 11:03:54 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct mlx
 	int bits_per_pixel;
 	int size_line;
 	int endian;
+	int length_win;
+	int width_win;
 	int * buffer_img;
 	void *img;
 	void *win;

@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/01 15:50:15 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/02 11:31:14 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,30 @@
 int	fill_struct_point(int j, int line, t_point **point, int fd)
 {
 	char	**split;
+	char *buffer;
 	int		collumn;
 	int		i;
 
 	i = 0;
 	collumn = 0;
-	split = ft_split(get_next_line(fd), ' ');
+	buffer = get_next_line(fd);
+	split = ft_split(buffer, ' ');
 	while (split[collumn] != NULL)
 		collumn++;
 	point[j] = malloc(sizeof(t_point) * collumn);
 	while (i < collumn)
 	{
-		point[j][i].x = i * 30;
-		point[j][i].y = j * 30;
+		point[j][i].x = i * 50;
+		point[j][i].y = j * 50;
 		point[j][i].z = ft_atoi (split[i]);
 		point[j][i].column = collumn;
 		point[j][i].line = line;
 		point[j][i].index_point = get_index(i, j, collumn);
-		// printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d index_point:%d\n", j, i, point[j][i].y, point[j][i].x, point[j][i].z, point[j][i].column, point[j][i].line, point[j][i].index_point);
 		i++;
 	}
 	ft_free_tab(split);
-	// printf ("\n\n");
-	// point[j][i].index_point = 0;
-	j++;
-	return(j);
+	free (buffer);
+	return(j + 1);
 }
 t_point	**recover_map(char **av)
 {
@@ -60,22 +59,21 @@ t_point	**recover_map(char **av)
 	while (i < line)
 		i = fill_struct_point(i, line, point, fd);
 	point[i] = NULL;
-	// printf("tab[2][0] x:%d y:%d\n", point[2][0].x, point[2][0].y);
 	close(fd);
 	return (point);
 }
 
 int	close_window(void *valu)
 {
-	t_data	*value;
+	t_data	*mlx;
 
-	value = (t_data *)valu;
-	mlx_destroy_image(value->mlx, value->img);
-	mlx_destroy_window((value->mlx), value->win);
-	mlx_loop_end(value->mlx);
-	// free(value->img);
-	// free(value->win);
-	// free(value->mlx);
+	mlx = (t_data *)valu;
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx_destroy_window((mlx->mlx), mlx->win);
+	mlx_loop_end(mlx->mlx);
+	// free(mlx->img);
+	// free(mlx->win);
+	// free(mlx->mlx);
 	return (1);
 }
 
@@ -85,11 +83,11 @@ int	redirection_event(int key, void *valu)
 		close_window(valu);
 	return (1);
 }
-t_point ** transform_on_3d(t_point ** point)
+t_point ** transform_on_3d(t_point ** point, t_data mlx)
 {
 	int j = 0;
 	int i;
-	// int a = 120;
+	// double a = 120;
 	int tmp;
 	t_point ** isométrique;
 	isométrique = point;
@@ -98,15 +96,12 @@ t_point ** transform_on_3d(t_point ** point)
 		i = 0;
 		while(i < point[0][0].column)
 		{
-			// isométrique[j][i].x = point[j][i].x + cos(a) * (point[j][i].z * -1) ;
-			// isométrique[j][i].y = point[j][i].y + sin(a) * (point[j][i].z * -1);
 			tmp = isométrique[j][i].x;
-			isométrique[j][i].x = (tmp - isométrique[j][i].y) * cos(0.523599);
-			isométrique[j][i].y = (tmp + isométrique[j][i].y) * sin(0.523599) - isométrique[j][i].z;
+			isométrique[j][i].x = (tmp - isométrique[j][i].y) * cos(0.523599) + (mlx.length_win / 2);
+			isométrique[j][i].y = (tmp + isométrique[j][i].y) * sin(0.523599) - isométrique[j][i].z + (mlx.width_win * 0.1);
 			printf("tab[%d][%d]  y:%d x:%d z:%d column: %d line: %d index_point:%d\n", j, i, isométrique[j][i].y, isométrique[j][i].x, isométrique[j][i].z, isométrique[j][i].column, isométrique[j][i].line, isométrique[j][i].index_point);
 			i++;
 		}
-	printf ("\n\n");
 		j++;
 	}
 	return (isométrique);
@@ -114,22 +109,25 @@ t_point ** transform_on_3d(t_point ** point)
 
 int	main(int ac, char **av)
 {
-	t_data value;
+	t_data mlx;
 	t_point **point;
 	t_point **isométrique;
 	if (ac == 2)
 	{
+		mlx.length_win = 1920;
+		mlx.width_win = 1080;
 		point = recover_map(av);
-		isométrique = transform_on_3d(point);
-		value.mlx = mlx_init();
-		value.win = mlx_new_window(value.mlx, 1280, 720, "FDF 42");
-		value.img = mlx_new_image(value.mlx, 1280, 720);
-		draw(value, isométrique);
+		isométrique = transform_on_3d(point, mlx);
+		mlx.mlx = mlx_init();
+		mlx.win = mlx_new_window(mlx.mlx, mlx.length_win, mlx.width_win, "FDF 42");
+		mlx.img = mlx_new_image(mlx.mlx, mlx.length_win, mlx.width_win);
+		draw(mlx, isométrique);
 		// ft_free_tab(point);
 		// ft_free_tab(isométrique);
-		mlx_key_hook(value.win, redirection_event, &value);
-		mlx_hook(value.win, 17, 0, close_window, &value);
-		mlx_loop(value.mlx);
-		mlx_loop_end(value.mlx);
+		mlx_key_hook(mlx.win, redirection_event, &mlx);
+		mlx_hook(mlx.win, 17, 0, close_window, &mlx);
+		mlx_loop(mlx.mlx);
 	}
+	else
+		return (2);
 }

@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/01 15:18:19 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/02 11:29:44 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void	draw(t_data value, t_point **point)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(value.mlx, value.win, value.img, 200, 50);
+	mlx_put_image_to_window(value.mlx, value.win, value.img, 0, 0);
 }
