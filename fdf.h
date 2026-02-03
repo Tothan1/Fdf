@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/02 17:31:01 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/03 16:09:03 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,8 @@ typedef struct point
 	int		index_point;
 }			t_point;
 
-typedef struct mlx
+typedef struct img
 {
-	char *av;
-	int		fd;
-	int		zoom;
-	int		line;
-	int		column;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
@@ -39,14 +34,34 @@ typedef struct mlx
 	int		width_win;
 	int		*buffer_img;
 	void	*img;
+}			t_img;
+
+typedef struct mlx
+{
+	char *av;
+	int		fd;
+	int		zoom;
+	int		line;
+	int		column;
 	void	*win;
 	void	*mlx;
+	t_img img;
 	t_point	**point;
 	t_point	**iso;
 }			t_data;
 
+void	transform_on_3d(t_data *mlx);
+void	recover_map(t_data *mlx, t_point ***point);
+
+/* EVENT */
+int	close_window(void *old_mlx);
+int	redirection_event(int key, t_data *mlx);
+void	zoom(t_data	*mlx, int nb);
+
+
+
 /* DRAW */
 int			get_index(int x, int y, int size_line);
-void		draw_segment(t_point point1, t_point point2, t_data *value);
-void		draw(t_data *value);
+void		draw_segment(t_point point1, t_point point2, t_img **img);
+void		draw(t_data *value, t_img *img);
 #endif

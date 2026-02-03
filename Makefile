@@ -11,6 +11,7 @@ CFLAGS=-Wall -Wextra -Werror -Wno-incompatible-pointer-types
 #### SOURCE ####
 SRC_FILES = parsing.c \
 		draw.c \
+		event.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 # OBJ_FILES = $(addsuffix .o, $(SRC_FILES))
