@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:21:27 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 16:25:41 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 16:32:51 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	zoom_or_height(t_data	*mlx, int nb, char var)
 		mlx->height += nb;
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->img.length_win, mlx->img.width_win);
-	all_process(*mlx);
+	all_process(**(&mlx));
 }
 
 
