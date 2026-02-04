@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 16:23:47 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 19:35:11 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct img
 	int		length_win;
 	int		width_win;
 	int		*buffer_img;
+	void	*old_img;
 	void	*img;
 }			t_img;
 
@@ -48,6 +49,7 @@ typedef struct mlx
 	void	*mlx;
 	t_img img;
 	t_point	**point;
+	t_point	**old_point;
 	t_point	**iso;
 }			t_data;
 
@@ -68,4 +70,6 @@ void	zoom(t_data	*mlx, int nb);
 int			get_index(int x, int y, int size_line);
 void		draw_segment(t_point point1, t_point point2, t_img **img);
 void		draw(t_data *value, t_img *img);
+int	check_point(t_data *mlx);
+
 #endif

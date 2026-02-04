@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:21:27 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 16:32:51 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 19:50:15 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	close_window(void *old_mlx)
 	t_data	*mlx;
 
 	mlx = (t_data *)old_mlx;
-	ft_free_all(*(mlx->point));
+
+	// ft_free_all(*(mlx->point));
 	// ft_free_all(*(mlx->iso));
+	ft_free_all(mlx->old_point);
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx_destroy_window((mlx->mlx), mlx->win);
 	mlx_loop_end(mlx->mlx);
@@ -30,13 +32,21 @@ int	close_window(void *old_mlx)
 	// free(mlx->mlx);
 	exit (2);
 }
-
 void all_process(t_data mlx)
 {
 	recover_map(&mlx, &mlx.point);
+	recover_map(&mlx, &mlx.old_point);
 	recover_map(&mlx, &mlx.iso);
 	transform_on_3d(&mlx);
-	draw(&mlx, &mlx.img);
+	if(check_point(&mlx))
+		draw(&mlx, &mlx.img);
+	else
+		{
+			ft_free_all(mlx.point);
+			ft_free_all(mlx.iso);
+			mlx.point = mlx.old_point;
+			// ft_free_all(mlx.old_point);
+		}
 }
 
 void	zoom_or_height(t_data	*mlx, int nb, char var)
@@ -49,41 +59,14 @@ void	zoom_or_height(t_data	*mlx, int nb, char var)
 		mlx->zoom += nb;
 	if(var == 'h')
 		mlx->height += nb;
+	mlx->img.old_img = mlx->img.img;
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->img.length_win, mlx->img.width_win);
 	all_process(**(&mlx));
 }
 
 
-int	check_height(t_data *mlx, int nb)
-{
-	int i;
-	int tmp;
-	int tmp2;
-	int j = 0;
 
-	while (j < mlx->line)
-	{
-		i = 0;
-		while (i < mlx->column)
-		{
-			if(mlx->height != 0)
-				tmp2 = mlx->point[j][i].z / mlx->height;
-			else
-				tmp2 = mlx->point[j][i].z;
-			tmp = mlx->point[j][i].x;
-			mlx->iso[j][i].x = (tmp - mlx->point[j][i].y) * cos(0.523599)
-				+ (mlx->img.length_win / 2);
-			mlx->iso[j][i].y = (tmp + mlx->point[j][i].y) * sin(0.523599)
-				- (tmp2 * (mlx-> height +nb)) + (mlx->img.width_win * 0.1);
-			if(mlx->iso[j][i].x < 0 || mlx->iso[j][i].x > mlx->img.length_win|| mlx->iso[j][i].y < 0 || mlx->iso[j][i].y > mlx->img.width_win )
-					return (0);
-			i++;
-		}
-		j++;
-	}
-	return(1);
-}
 void	redirection_event2(int key, int x, int y, t_data *mlx)
 {
 	(void)x;
@@ -104,9 +87,9 @@ void	redirection_event(int key, t_data *mlx)
 	// printf("\n%d\n", key);
 
 	
-	if (key == 65362 && check_height(mlx, 5))
+	if (key == 65362 )
 		zoom_or_height(mlx, +5, 'h');
-	else if (key == 65364 && check_height(mlx, -5))
+	else if (key == 65364 )
 		zoom_or_height(mlx, -5, 'h');
 	else if (key == 65307)
 		close_window(mlx);

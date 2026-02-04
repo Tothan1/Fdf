@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 16:18:22 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 19:47:03 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	main(int ac, char **av)
 		mlx.av = av[1];
 		mlx.zoom = 40;
 		mlx.height = 10;
+		mlx.img.old_img = NULL;
 		mlx.img.length_win = 1920;
 		mlx.img.width_win = 1080;
 		mlx.mlx = mlx_init();
