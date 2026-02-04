@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/03 16:59:12 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 11:54:37 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 #include <stdio.h>
 
 
-int	fill_struct_point(int j, t_data **mlx, t_point **** point)
+int	fill_struct_point(int j, t_data *mlx, t_point **** point)
 {
 	char	**split;
 	char	*buffer;
 	int		i;
 
 	i = 0;
-	(*mlx)->column = 0;
-	buffer = get_next_line((*mlx)->fd);
+	mlx->column = 0;
+	buffer = get_next_line(mlx->fd);
 	split = ft_split(buffer, ' ');
-	while (split[(*mlx)->column] != NULL)
-		(*mlx)->column++;
-	(**point)[j] = malloc(sizeof(t_point) * (*mlx)->column);
+	while (split[mlx->column] != NULL)
+		mlx->column++;
+	(**point)[j] = malloc(sizeof(t_point) * mlx->column);
 	// if(!(*point[j]))
-		// close_window( (*mlx));
-	while (i < (*mlx)->column)
+		// close_window( mlx);
+	while (i < mlx->column)
 	{
-		(**point)[j][i].x = i * (*mlx)->zoom;
-		(**point)[j][i].y = j * (*mlx)->zoom;
-		(**point)[j][i].z = ft_atoi(split[i]);
-		(**point)[j][i].index_point = get_index(i, j, (*mlx)->column);
-			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i, (*mlx)->point[j][i].x, (*mlx)->point[j][i].y, (*mlx)->point[j][i].z, (*mlx)->point[j][i].index_point);
+		(**point)[j][i].x = i * mlx->zoom;
+		(**point)[j][i].y = j * mlx->zoom;
+		(**point)[j][i].z = ft_atoi(split[i]) * 10;
+		(**point)[j][i].index_point = get_index(i, j, mlx->column);
+			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i, (**point)[j][i].x, (**point)[j][i].y, (**point)[j][i].z, (**point)[j][i].index_point);
 		i++;
 	}
 	printf("\n\n");
@@ -58,7 +58,7 @@ void	recover_map(t_data *mlx, t_point ***point)
 		// close_window(mlx);
 	i = 0;
 	while (i < mlx->line)
-		i = fill_struct_point(i, &mlx, &point);
+		i = fill_struct_point(i, mlx, &point);
 	(*point)[i] = NULL;
 	close(mlx->fd);
 }
@@ -113,7 +113,8 @@ int	main(int ac, char **av)
 		transform_on_3d(&mlx);
 		draw(&mlx, &mlx.img);
 		mlx_key_hook(mlx.win, redirection_event, &mlx);
-		mlx_mouse_hook(mlx.win, redirection_event, &mlx);
+		mlx_hook(mlx.win, 4, 0, zoom, &mlx);
+		// mlx_mouse_hook(mlx.win, redirection_event, &mlx);
 		mlx_hook(mlx.win, 17, 0, close_window, &mlx);
 		mlx_loop(mlx.mlx);
 	}
