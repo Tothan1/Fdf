@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/03 16:09:03 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 16:23:47 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct mlx
 	char *av;
 	int		fd;
 	int		zoom;
+	int		height;
 	int		line;
 	int		column;
 	void	*win;
@@ -53,9 +54,12 @@ typedef struct mlx
 void	transform_on_3d(t_data *mlx);
 void	recover_map(t_data *mlx, t_point ***point);
 
+void all_process(t_data mlx);
+
 /* EVENT */
 int	close_window(void *old_mlx);
-int	redirection_event(int key, t_data *mlx);
+void	redirection_event(int key, t_data *mlx);
+void	redirection_event2(int key, int x, int y, t_data *mlx);
 void	zoom(t_data	*mlx, int nb);
 
 

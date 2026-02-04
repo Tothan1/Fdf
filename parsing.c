@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 11:54:37 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 16:18:22 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	fill_struct_point(int j, t_data *mlx, t_point **** point)
 	{
 		(**point)[j][i].x = i * mlx->zoom;
 		(**point)[j][i].y = j * mlx->zoom;
-		(**point)[j][i].z = ft_atoi(split[i]) * 10;
+		(**point)[j][i].z = ft_atoi(split[i]) * mlx->height;
 		(**point)[j][i].index_point = get_index(i, j, mlx->column);
 			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i, (**point)[j][i].x, (**point)[j][i].y, (**point)[j][i].z, (**point)[j][i].index_point);
 		i++;
@@ -71,7 +71,7 @@ void	transform_on_3d(t_data *mlx)
 	int	tmp;
 
 	j = 0;
-		// printf("\n----------------------------------------ISO--------------------------\n");
+		printf("\n----------------------------------------ISO--------------------------\n");
 	while (j < mlx->line)
 	{
 		i = 0;
@@ -82,12 +82,12 @@ void	transform_on_3d(t_data *mlx)
 				+ (mlx->img.length_win / 2);
 			mlx->iso[j][i].y = (tmp + mlx->iso[j][i].y) * sin(0.523599)
 				- mlx->iso[j][i].z + (mlx->img.width_win * 0.1);
-			// printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
-				// mlx->iso[j][i].y, mlx->iso[j][i].x, mlx->iso[j][i].z,
-				// mlx->iso[j][i].index_point);
+			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
+				mlx->iso[j][i].y, mlx->iso[j][i].x, mlx->iso[j][i].z,
+				mlx->iso[j][i].index_point);
 			i++;
 		}
-		// printf("\n\n");
+		printf("\n\n");
 		j++;
 	}
 }
@@ -101,6 +101,7 @@ int	main(int ac, char **av)
 	{
 		mlx.av = av[1];
 		mlx.zoom = 40;
+		mlx.height = 10;
 		mlx.img.length_win = 1920;
 		mlx.img.width_win = 1080;
 		mlx.mlx = mlx_init();
@@ -108,13 +109,9 @@ int	main(int ac, char **av)
 			"FDF 42");
 		mlx.img.img = mlx_new_image(mlx.mlx, mlx.img.length_win, mlx.img.width_win);
 
-		recover_map(&mlx, &mlx.point);
-		recover_map(&mlx, &mlx.iso);
-		transform_on_3d(&mlx);
-		draw(&mlx, &mlx.img);
+		all_process(*(&mlx));
 		mlx_key_hook(mlx.win, redirection_event, &mlx);
-		mlx_hook(mlx.win, 4, 0, zoom, &mlx);
-		// mlx_mouse_hook(mlx.win, redirection_event, &mlx);
+		mlx_mouse_hook(mlx.win, redirection_event2, &mlx);
 		mlx_hook(mlx.win, 17, 0, close_window, &mlx);
 		mlx_loop(mlx.mlx);
 	}

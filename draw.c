@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/03 14:55:14 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/04 15:17:57 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,12 @@ void	draw_segment(t_point point1, t_point point2, t_img  **img)
 	dx = point2.x - point1.x;
 	dy = point2.y - point1.y;
 
-	if (dx >= dy)
-		step = dx;
-	else
-		step = dy;
+		step = fmax(fabs(dx), fabs(dy));
 	dx = dx / step;
 	dy = dy / step;
 	x = point1.x;
 	y = point1.y;
-	i = 1;
+	i = 0;
 	while (i <= step)
 	{
 		(*img)->buffer_img[get_index(x, y, (*img)->size_line)] = 0xFFFF25FF;
@@ -55,8 +52,8 @@ void	draw(t_data *value, t_img *img)
 		x = 0;
 		while (x < (value->column))
 		{
-			// value->buffer_img[get_index(value->iso[y][x].x,
-				// value->iso[y][x].y, value->size_line)] = 0xFFFFFFFF;
+			img->buffer_img[get_index(value->iso[y][x].x,
+				value->iso[y][x].y, img->size_line)] = 0xFFFFFFFF;
 			if (x > 0)
 				draw_segment(value->iso[y][x - 1], value->iso[y][x], &img);
 			if (y > 0)
