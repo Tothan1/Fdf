@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/05 11:10:15 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/05 17:08:01 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct point
 	int		x;
 	int		y;
 	int		z;
+	int		column;
 	int		index_point;
 }			t_point;
 
@@ -30,8 +31,8 @@ typedef struct img
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
-	int		length_win;
-	int		width_win;
+	int		length;
+	int		width;
 	int		*buffer_img;
 	void	*img;
 }			t_img;

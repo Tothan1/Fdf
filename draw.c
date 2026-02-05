@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/05 11:17:02 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/05 16:48:28 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	draw(t_data *value, t_img *img)
 	while (y < (value->line))
 	{
 		x = 0;
-		while (x < (value->column))
+		while (x < value->iso[y]->column)
 		{
 			if (x > 0)
 				draw_segment(value->iso[y][x - 1], value->iso[y][x], &img);
@@ -64,6 +64,8 @@ void	draw(t_data *value, t_img *img)
 		y++;
 	}
 	mlx_put_image_to_window(value->mlx, value->win, img->img, 0, 0);
-	// ft_free_all(value->point);
-	// ft_free_all(value->iso);
+	ft_free_all(value->point);
+	value->point = NULL;
+	ft_free_all(value->iso);
+	value->iso = NULL;
 }
