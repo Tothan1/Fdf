@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/04 19:43:23 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/05 11:17:02 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,6 @@ int	get_index(int x, int y, int size_line)
 }
 
 
-int	check_point(t_data *mlx)
-{
-	int i;
-	int j = 0;
-
-	while (j < mlx->line)
-	{
-		i = 0;
-		while (i < mlx->column)
-		{
-			if(mlx->iso[j][i].x < 0 || mlx->iso[j][i].x > mlx->img.length_win|| mlx->iso[j][i].y < 0 || mlx->iso[j][i].y > mlx->img.width_win )
-				return (0);
-			i++;
-		}
-		j++;
-	}
-	return(1);
-}
 void	draw_segment(t_point point1, t_point point2, t_img  **img)
 {
 	int i, step;
@@ -51,7 +33,8 @@ void	draw_segment(t_point point1, t_point point2, t_img  **img)
 	i = 0;
 	while (i <= step)
 	{
-		(*img)->buffer_img[get_index(x, y, (*img)->size_line)] = 0xFFFF25FF;
+		if(x >= 0 && x <= (*img)->length_win && y >= 0 && y <= (*img)->width_win)
+			(*img)->buffer_img[get_index(x, y, (*img)->size_line)] = 0xFFFF25FF;
 		x = x + dx;
 		y = y + dy;
 		i++;
@@ -72,8 +55,6 @@ void	draw(t_data *value, t_img *img)
 		x = 0;
 		while (x < (value->column))
 		{
-			// img->buffer_img[get_index(value->iso[y][x].x,
-				// value->iso[y][x].y, img->size_line)] = 0xFFFFFFFF;
 			if (x > 0)
 				draw_segment(value->iso[y][x - 1], value->iso[y][x], &img);
 			if (y > 0)
@@ -83,8 +64,6 @@ void	draw(t_data *value, t_img *img)
 		y++;
 	}
 	mlx_put_image_to_window(value->mlx, value->win, img->img, 0, 0);
-	ft_free_all(value->old_point);
-	value->old_point = value->point;
-	ft_free_all(value->point);
-	ft_free_all(value->iso);
+	// ft_free_all(value->point);
+	// ft_free_all(value->iso);
 }
