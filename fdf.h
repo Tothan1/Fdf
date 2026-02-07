@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 10:19:03 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 11:04:23 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct mlx
 	void	*mlx;
 	t_img img;
 	t_point	**point;
-	t_point	**iso;
 }			t_data;
 
 void	transform_on_3d(t_data *mlx);

@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:21:27 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 10:16:39 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 11:06:24 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ int	close_window(void *old_mlx)
 
 	mlx = (t_data *)old_mlx;
 	if(mlx->point != NULL)
-		ft_free_all(*(mlx->point));
-	if(mlx->iso != NULL)
-		ft_free_all(*(mlx->iso));
+		ft_free_all(mlx->point);
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx_destroy_window((mlx->mlx), mlx->win);
 	mlx_loop_end(mlx->mlx);
 	// free(mlx->img.img);
 	// free(mlx->win);
+	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
 	exit(2);
 }
 
 void	zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var)
 {
-	mlx->iso = NULL;
-	mlx->point = NULL;
 	if (var == 'z')
 		mlx->zoom += nb;
 	if (var == 'h')
@@ -43,9 +40,10 @@ void	zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var)
 		mlx->discrepancy += nb;
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->img.length,
-			mlx->img.width);
+		mlx->img.width);
+	if(mlx->point != NULL)
+		ft_free_all(mlx->point);
 	recover_map(&(*mlx), &(*mlx).point);
-	recover_map(&(*mlx), &(*mlx).iso);
 	transform_on_3d(&(*mlx));
 	draw(&(*mlx), &mlx->img);
 }

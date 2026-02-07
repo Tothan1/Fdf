@@ -6,12 +6,13 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/05 17:08:24 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 11:32:31 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
+
 
 int	fill_struct_point(int j, t_data *mlx, t_point ****point)
 {
@@ -68,6 +69,8 @@ void	recover_map(t_data *mlx, t_point ***point)
 	i = 0;
 	while (i < mlx->line)
 		i = fill_struct_point(i, mlx, &point);
+	buffer = get_next_line(mlx->fd);
+	free(buffer);
 	(*point)[i] = NULL;
 	close(mlx->fd);
 }
@@ -79,20 +82,20 @@ void	transform_on_3d(t_data *mlx)
 	int	tmp;
 
 	j = 0;
-	printf("\n----------------------------------------ISO--------------------------\n");
+	printf("\n----------------------------------------point--------------------------\n");
 	while (j < mlx->line)
 	{
 		i = 0;
-		while (i < mlx->iso[j]->column)
+		while (i < mlx->point[j]->column)
 		{
-			tmp = mlx->iso[j][i].x;
-			mlx->iso[j][i].x = (tmp - mlx->iso[j][i].y) * cos(0.523599)
+			tmp = mlx->point[j][i].x;
+			mlx->point[j][i].x = (tmp - mlx->point[j][i].y) * cos(0.523599)
 				+ (mlx->img.length / 2) + mlx->discrepancy;
-			mlx->iso[j][i].y = (tmp + mlx->iso[j][i].y) * sin(0.523599)
-				- mlx->iso[j][i].z + (mlx->img.width * 0.1);
+			mlx->point[j][i].y = (tmp + mlx->point[j][i].y) * sin(0.523599)
+				- mlx->point[j][i].z + (mlx->img.width * 0.1);
 			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
-				mlx->iso[j][i].y, mlx->iso[j][i].x, mlx->iso[j][i].z,
-				mlx->iso[j][i].index_point);
+				mlx->point[j][i].y, mlx->point[j][i].x, mlx->point[j][i].z,
+				mlx->point[j][i].index_point);
 			i++;
 		}
 		printf("\n\n");
@@ -114,11 +117,9 @@ int	main(int ac, char **av)
 		mlx.img.width = 1080;
 		mlx.mlx = mlx_init();
 		mlx.point = NULL;
-		mlx.iso = NULL;
 		mlx.win = mlx_new_window(mlx.mlx, mlx.img.length, mlx.img.width, "42");
 		mlx.img.img = mlx_new_image(mlx.mlx, mlx.img.length, mlx.img.width);
 		recover_map(&mlx, &mlx.point);
-		recover_map(&mlx, &mlx.iso);
 		transform_on_3d(&mlx);
 		draw(&mlx, &mlx.img);
 		mlx_key_hook(mlx.win, redirection_event, &mlx);
