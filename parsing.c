@@ -6,13 +6,11 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 12:03:32 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:56:15 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
-
 
 int	fill_struct_point(int j, t_data *mlx, t_point ****point)
 {
@@ -28,24 +26,21 @@ int	fill_struct_point(int j, t_data *mlx, t_point ****point)
 	while (split[mlx->column] != NULL)
 		mlx->column++;
 	(**point)[j] = malloc(sizeof(t_point) * mlx->column);
-	// if(!(**point[j]))
-	// close_window(&(*mlx));
+	if (!(**point)[j])
+		close_window(&(*mlx));
 	while (i < mlx->column)
 	{
 		(**point)[j][i].x = i * mlx->zoom;
 		(**point)[j][i].y = j * mlx->zoom;
 		(**point)[j][i].z = ft_atoi(split[i]) * mlx->height;
 		(**point)[j][i].index_point = get_index(i, j, mlx->column);
-		printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
-			(**point)[j][i].x, (**point)[j][i].y, (**point)[j][i].z,
-			(**point)[j][i].index_point);
 		i++;
 	}
 	(**point)[j]->column = mlx->column;
-	printf("\n\n");
 	ft_free_all(split);
 	return (j + 1);
 }
+
 void	recover_map(t_data *mlx, t_point ***point)
 {
 	int		i;
@@ -82,7 +77,6 @@ void	transform_on_3d(t_data *mlx)
 	int	tmp;
 
 	j = 0;
-	printf("\n----------------------------------------point--------------------------\n");
 	while (j < mlx->line)
 	{
 		i = 0;
@@ -93,12 +87,8 @@ void	transform_on_3d(t_data *mlx)
 				+ (mlx->img.length / 2) + mlx->discrepancy;
 			mlx->point[j][i].y = (tmp + mlx->point[j][i].y) * sin(0.523599)
 				- mlx->point[j][i].z + (mlx->img.width * 0.1);
-			printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
-				mlx->point[j][i].y, mlx->point[j][i].x, mlx->point[j][i].z,
-				mlx->point[j][i].index_point);
 			i++;
 		}
-		printf("\n\n");
 		j++;
 	}
 }
@@ -139,9 +129,9 @@ int	main(int ac, char **av)
 // 	{
 // 		printf("tab[%d][%d]  y:%d x:%d z:%d index_point:%d\n", j, i,
 // mlx.point[j][i].y, mlx.point[j][i].x, mlx.point[j][i].z,
-	// 			mlx.point[j][i].index_point);
-	// 		i++;
-	// 	}
-	// 	printf("\n\n");
-	// 	j++;
-	// }
+// 			mlx.point[j][i].index_point);
+// 		i++;
+// 	}
+// 	printf("\n\n");
+// 	j++;
+// }

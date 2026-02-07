@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 13:12:08 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/02 15:34:55 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:54:25 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_free_all(void **ptr)
 {
-	int	i;
-	char **tab;
-	
-	tab = (char **) ptr;
+	int		i;
+	char	**tab;
+
+	tab = (char **)ptr;
 	i = 0;
 	while (tab[i] != NULL)
 	{

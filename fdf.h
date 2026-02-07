@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 11:04:23 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:58:02 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct img
 
 typedef struct mlx
 {
-	char *av;
+	char	*av;
 	int		fd;
 	int		zoom;
 	int		height;
@@ -48,26 +48,24 @@ typedef struct mlx
 	int		discrepancy;
 	void	*win;
 	void	*mlx;
-	t_img img;
+	t_img	img;
 	t_point	**point;
 }			t_data;
 
-void	transform_on_3d(t_data *mlx);
-void	recover_map(t_data *mlx, t_point ***point);
+void		transform_on_3d(t_data *mlx);
+void		recover_map(t_data *mlx, t_point ***point);
 
-void all_process(t_data mlx);
+void		all_process(t_data mlx);
 
 /* EVENT */
-int	close_window(void *old_mlx);
-void	redirection_event(int key, t_data *mlx);
-void	redirection_event2(int key, int x, int y, t_data *mlx);
-void	zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var);
-
-
+int			close_window(void *old_mlx);
+void		redirection_event(int key, t_data *mlx);
+void		redirection_event2(int key, int x, int y, t_data *mlx);
+void		zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var);
 
 /* DRAW */
 int			get_index(int x, int y, int size_line);
-void		draw_segment(t_point point1, t_point point2, t_img **img);
+void		draw_segment(t_point point1, t_point point2, t_img **img, int step);
 void		draw(t_data *value, t_img *img);
 
 #endif
