@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 16:16:04 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:34:43 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	transform_on_3d(t_data *mlx)
 		j++;
 	}
 }
-void	initialise_struct_mlx(t_data	*mlx, char **av)
+
+void	initialise_struct_mlx(t_data *mlx, char **av)
 {
 	mlx->av = av[1];
 	mlx->zoom = 40;
@@ -109,12 +110,13 @@ void	initialise_struct_mlx(t_data	*mlx, char **av)
 int	main(int ac, char **av)
 {
 	t_data	mlx;
-	int tmp_fd;
+	int		tmp_fd;
+
 	if (ac == 2)
 	{
 		tmp_fd = open(av[1], O_RDONLY);
-		if( tmp_fd == -1)
-			return(2);
+		if (tmp_fd == -1)
+			return (2);
 		close(tmp_fd);
 		initialise_struct_mlx(&mlx, av);
 		recover_map(&mlx, &mlx.point);

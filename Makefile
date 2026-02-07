@@ -5,7 +5,7 @@ MLX = ./minilibx-linux/libmlx.a
 # HEADER_PATH = include
 CC= cc
 # CFLAGS=-Wall -Wextra -Werror -I $(HEADER0_PATH)
-CFLAGS=-Wall -Wextra -Werror -Wno-incompatible-pointer-types
+CFLAGS=-Wall -Wextra -Werror
 # OBJ=ft_*.c =.o
 # SRCS = $(HEADER_PATH)ft_atoi
 #### SOURCE ####
@@ -29,7 +29,7 @@ ${LIBFT} :
 	$(MAKE) -C ./libft
 
 ${MLX} :
-	$(MAKE) -C ./minilibx-linux CFLAGS="-O3 -w -std=gnu89 -fpermissive"
+	$(MAKE) -C ./minilibx-linux 
 
 clean:
 	rm -f ${OBJ_FILES}
