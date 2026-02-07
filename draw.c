@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 14:59:47 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 15:02:48 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,29 @@ void	draw_segment(t_point point1, t_point point2, t_img **img, int step)
 	}
 }
 
-void	draw(t_data *value, t_img *img)
+void	draw(t_data *val, t_img *img)
 {
 	int	y;
 	int	x;
-	int	step;
+	int	i;
 
 	y = 0;
-	step = 0;
+	i = 0;
 	img->buffer_img = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->size_line, &img->endian);
 	img->size_line /= 4;
-	while (y < (value->line))
+	while (y < (val->line))
 	{
 		x = 0;
-		while (x < value->point[y]->column)
+		while (x < val->point[y]->column)
 		{
 			if (x > 0)
-				draw_segment(value->point[y][x - 1], value->point[y][x], &img,
-					step);
+				draw_segment(val->point[y][x - 1], val->point[y][x], &img, i);
 			if (y > 0)
-				draw_segment(value->point[y - 1][x], value->point[y][x], &img,
-					step);
+				draw_segment(val->point[y - 1][x], val->point[y][x], &img, i);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(value->mlx, value->win, img->img, 0, 0);
+	mlx_put_image_to_window(val->mlx, val->win, img->img, 0, 0);
 }
