@@ -58,6 +58,7 @@ SRC_FILES = ft_atoi.c \
 		ft_super_strjoin.c \
 		ft_strjoin3.c\
 		ft_free_tab.c \
+		ft_free_all.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		ft_printf.c

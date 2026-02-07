@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:39 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 14:58:02 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:53:50 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ typedef struct mlx
 	t_point	**point;
 }			t_data;
 
-void		transform_on_3d(t_data *mlx);
+/* PARSING */
+int			fill_struct_point(int j, t_data *mlx, t_point ****point);
 void		recover_map(t_data *mlx, t_point ***point);
-
-void		all_process(t_data mlx);
+void		transform_on_3d(t_data *mlx);
+void		initialise_struct_mlx(t_data *mlx, char **av);
 
 /* EVENT */
+void		ft_free_struct(t_point **tab);
 int			close_window(void *old_mlx);
-void		redirection_event(int key, t_data *mlx);
-void		redirection_event2(int key, int x, int y, t_data *mlx);
+int			redirection_event(int key, t_data *mlx);
+int			redirection_event2(int key, int x, int y, t_data *mlx);
 void		zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var);
 
 /* DRAW */

@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 16:34:43 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:43:27 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	fill_struct_point(int j, t_data *mlx, t_point ****point)
 		i++;
 	}
 	(**point)[j]->column = mlx->column;
-	ft_free_all(split);
+	ft_free_tab(split);
 	return (j + 1);
 }
 

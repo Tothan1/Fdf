@@ -6,11 +6,24 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:21:27 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 14:54:13 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:53:42 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_free_struct(t_point **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 int	close_window(void *old_mlx)
 {
@@ -18,7 +31,7 @@ int	close_window(void *old_mlx)
 
 	mlx = (t_data *)old_mlx;
 	if (mlx->point != NULL)
-		ft_free_all(mlx->point);
+		ft_free_struct(mlx->point);
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx_destroy_window((mlx->mlx), mlx->win);
 	mlx_loop_end(mlx->mlx);
@@ -38,13 +51,13 @@ void	zoom_or_height_or_discrepancy(t_data *mlx, int nb, char var)
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->img.length, mlx->img.width);
 	if (mlx->point != NULL)
-		ft_free_all(mlx->point);
+		ft_free_struct(mlx->point);
 	recover_map(&(*mlx), &(*mlx).point);
 	transform_on_3d(&(*mlx));
 	draw(&(*mlx), &mlx->img);
 }
 
-void	redirection_event2(int key, int x, int y, t_data *mlx)
+int	redirection_event2(int key, int x, int y, t_data *mlx)
 {
 	(void)x;
 	(void)y;
@@ -52,9 +65,10 @@ void	redirection_event2(int key, int x, int y, t_data *mlx)
 		zoom_or_height_or_discrepancy(mlx, -5, 'z');
 	else if (key == 5)
 		zoom_or_height_or_discrepancy(mlx, +5, 'z');
+	return (1);
 }
 
-void	redirection_event(int key, t_data *mlx)
+int	redirection_event(int key, t_data *mlx)
 {
 	if (key == 65362)
 		zoom_or_height_or_discrepancy(mlx, +5, 'h');
@@ -66,4 +80,5 @@ void	redirection_event(int key, t_data *mlx)
 		zoom_or_height_or_discrepancy(mlx, -5, 'd');
 	else if (key == 65307)
 		close_window(mlx);
+	return (1);
 }

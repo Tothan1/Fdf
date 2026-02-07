@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:00:12 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/02 15:35:26 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:42:42 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_free_all(void **ptr);
+void	ft_free_tab(char **tab);
 /* bonus-libft*/
 typedef struct s_list
 {
