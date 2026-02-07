@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:21:27 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/05 17:08:42 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 10:16:39 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	redirection_event2(int key, int x, int y, t_data *mlx)
 {
 	(void)x;
 	(void)y;
-	if (key == 4 && mlx->zoom > 0)
+	if (key == 4)
 		zoom_or_height_or_discrepancy(mlx, -5, 'z');
-	else if (key == 5 && mlx->zoom < 200)
+	else if (key == 5)
 		zoom_or_height_or_discrepancy(mlx, +5, 'z');
 }
 

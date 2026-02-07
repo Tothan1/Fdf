@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 17:55:17 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/05 16:48:28 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 10:19:18 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	draw_segment(t_point point1, t_point point2, t_img  **img)
 	i = 0;
 	while (i <= step)
 	{
-		if(x >= 0 && x <= (*img)->length_win && y >= 0 && y <= (*img)->width_win)
+		if(x >= 0 && x <= (*img)->length && y >= 0 && y <= (*img)->width)
 			(*img)->buffer_img[get_index(x, y, (*img)->size_line)] = 0xFFFF25FF;
 		x = x + dx;
 		y = y + dy;
