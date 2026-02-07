@@ -6,7 +6,7 @@
 /*   By: tle-rhun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:10:41 by tle-rhun          #+#    #+#             */
-/*   Updated: 2026/02/07 14:56:15 by tle-rhun         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:16:04 by tle-rhun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,31 @@ void	transform_on_3d(t_data *mlx)
 		j++;
 	}
 }
+void	initialise_struct_mlx(t_data	*mlx, char **av)
+{
+	mlx->av = av[1];
+	mlx->zoom = 40;
+	mlx->height = 10;
+	mlx->discrepancy = 0;
+	mlx->img.length = 1920;
+	mlx->img.width = 1080;
+	mlx->mlx = mlx_init();
+	mlx->point = NULL;
+	mlx->win = mlx_new_window(mlx->mlx, mlx->img.length, mlx->img.width, "42");
+	mlx->img.img = mlx_new_image(mlx->mlx, mlx->img.length, mlx->img.width);
+}
 
 int	main(int ac, char **av)
 {
 	t_data	mlx;
-
+	int tmp_fd;
 	if (ac == 2)
 	{
-		mlx.av = av[1];
-		mlx.zoom = 40;
-		mlx.height = 10;
-		mlx.discrepancy = 0;
-		mlx.img.length = 1920;
-		mlx.img.width = 1080;
-		mlx.mlx = mlx_init();
-		mlx.point = NULL;
-		mlx.win = mlx_new_window(mlx.mlx, mlx.img.length, mlx.img.width, "42");
-		mlx.img.img = mlx_new_image(mlx.mlx, mlx.img.length, mlx.img.width);
+		tmp_fd = open(av[1], O_RDONLY);
+		if( tmp_fd == -1)
+			return(2);
+		close(tmp_fd);
+		initialise_struct_mlx(&mlx, av);
 		recover_map(&mlx, &mlx.point);
 		transform_on_3d(&mlx);
 		draw(&mlx, &mlx.img);
